@@ -1,13 +1,11 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:isar_basic/models/product.dart';
-import 'package:isar_basic/services/db_services.dart';
 
 class AddProductOverlay extends StatefulWidget {
-  const AddProductOverlay({super.key});
+  final Function(Product)? onSubmit;
+  const AddProductOverlay({super.key, this.onSubmit});
 
   @override
   State<AddProductOverlay> createState() => _AddProductOverlayState();
@@ -72,13 +70,15 @@ class _AddProductOverlayState extends State<AddProductOverlay> {
                         height: 45,
                         child: ElevatedButton(
                             onPressed: () async {
-                              await DBServices.createNewProduct(Product(
-                                name: nameController.text,
-                                description: descController.text,
-                                price: double.parse(priceController.text),
-                              ));
-
-                              // await DBServices.getProductList();
+                              if (widget.onSubmit != null) {
+                                widget.onSubmit!(Product(
+                                  name: nameController.text,
+                                  description: descController.text,
+                                  price: double.parse(priceController.text),
+                                ));
+                              } else {
+                                return;
+                              }
                             },
                             child: Text("Add To Store")))),
               ],

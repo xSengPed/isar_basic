@@ -20,26 +20,59 @@ class DBServices {
   }
 
   static createNewProduct(Product product) async {
-    log(product.name);
-    log(product.description);
-    log(product.price.toString());
     try {
       await isar?.writeTxn(() async {
         await isar?.collection<Product>().put(product);
       });
-
-      log('Add Done');
     } catch (e) {
-      log(e.toString());
+      throw {
+        "code": 5000,
+        "error_title": "Create Product",
+        "error_msg ": "Failed To Create  Product",
+      };
     }
   }
 
-  static getProductList() async {
+  static updateProduct(Product product) async {
     try {
-      final productList = await isar?.collection<Product>().where().findAll();
+      throw {};
+      await isar?.writeTxn(() async {
+        await isar?.collection<Product>().put(product);
+      });
+    } catch (e) {
+      throw {
+        "code": 5000,
+        "error_title": "Update Product",
+        "error_msg ": "Failed To Update Product",
+      };
+    }
+  }
 
-      log(productList.toString());
+  static Future<List<Product>> getProductList() async {
+    try {
+      final productList =
+          await isar?.collection<Product>().where().findAll() ?? [];
       return productList;
-    } catch (e) {}
+    } catch (e) {
+      throw {
+        "code": 5000,
+        "error_title": "Get Product",
+        "error_msg ": "Failed To Get All Product",
+      };
+    }
+  }
+
+  static Future<void> deleteProduct(Product product) async {
+    try {
+      await isar?.writeTxn(() async {
+        await isar?.collection<Product>().delete(product.id);
+      });
+    } catch (e) {
+      throw {
+        "code": 5000,
+        "error_title": "Delete Product",
+        "error_msg ": "Failed To Delete Product",
+      };
+    }
   }
 }
