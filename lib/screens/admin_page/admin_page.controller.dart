@@ -24,7 +24,7 @@ class AdminPageController extends ChangeNotifier {
       await DBServices.updateProduct(product);
       getProductsList();
     } catch (e) {
-      Alert.showErrorAlert(context, err: e as Map);
+      Alert.showErrorAlert(context, err: e);
     }
   }
 

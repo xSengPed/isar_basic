@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:isar_basic/components/add_product_overlay.dart';
+import 'package:isar_basic/components/alert.dart';
 import 'package:isar_basic/components/product_widget.dart';
 import 'package:isar_basic/models/product.dart';
 import 'package:isar_basic/screens/admin_page/admin_page.controller.dart';
@@ -65,7 +66,16 @@ class _AdminPageState extends State<AdminPage> {
                   return ProductWidget(
                     product: con.productsList[index],
                     onDelete: () {
-                      con.deleteProduct(con.productsList[index]);
+                      Alert.show(
+                        context,
+                        title: "Are u want to delete",
+                        desc: "System will delete this data",
+                        okText: "Delete",
+                        okColor: Colors.red,
+                        onOk: () {
+                          con.deleteProduct(con.productsList[index]);
+                        },
+                      );
                     },
                     onUpdate: () {
                       Product updated = con.productsList[index];

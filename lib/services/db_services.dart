@@ -28,14 +28,14 @@ class DBServices {
       throw {
         "code": 5000,
         "error_title": "Create Product",
-        "error_msg ": "Failed To Create  Product",
+        "error_msg": "Failed To Create  Product",
       };
     }
   }
 
   static updateProduct(Product product) async {
     try {
-      throw {};
+      throw 100;
       await isar?.writeTxn(() async {
         await isar?.collection<Product>().put(product);
       });
@@ -43,7 +43,7 @@ class DBServices {
       throw {
         "code": 5000,
         "error_title": "Update Product",
-        "error_msg ": "Failed To Update Product",
+        "error_msg": "Failed To Update Product",
       };
     }
   }
@@ -57,7 +57,7 @@ class DBServices {
       throw {
         "code": 5000,
         "error_title": "Get Product",
-        "error_msg ": "Failed To Get All Product",
+        "error_msg": "Failed To Get All Product",
       };
     }
   }
@@ -71,7 +71,7 @@ class DBServices {
       throw {
         "code": 5000,
         "error_title": "Delete Product",
-        "error_msg ": "Failed To Delete Product",
+        "error_msg": "Failed To Delete Product",
       };
     }
   }
