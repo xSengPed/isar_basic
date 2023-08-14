@@ -66,16 +66,32 @@ class AlertWidget extends StatelessWidget {
 
 class Alert {
   static void showErrorAlert(BuildContext context, {dynamic err}) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertWidget(
-          title: err["error_title"].toString(),
-          msg: err["error_msg"].toString(),
-          okText: "CLOSE",
-        );
-      },
-    );
+    if (err["code"] == 5001) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertWidget(
+            title: err["error_title"].toString(),
+            msg: err["error_msg"].toString(),
+            okText: "CLOSE",
+            onOk: () {
+              Navigator.pop(context);
+            },
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertWidget(
+            title: err["error_title"].toString(),
+            msg: err["error_msg"].toString(),
+            okText: "CLOSE",
+          );
+        },
+      );
+    }
   }
 
   static void show(BuildContext context,

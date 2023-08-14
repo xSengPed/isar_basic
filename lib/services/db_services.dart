@@ -50,12 +50,13 @@ class DBServices {
 
   static Future<List<Product>> getProductList() async {
     try {
+      // throw 100;
       final productList =
           await isar?.collection<Product>().where().findAll() ?? [];
       return productList;
     } catch (e) {
       throw {
-        "code": 5000,
+        "code": 4000,
         "error_title": "Get Product",
         "error_msg": "Failed To Get All Product",
       };
@@ -64,6 +65,7 @@ class DBServices {
 
   static Future<void> deleteProduct(Product product) async {
     try {
+      throw 100;
       await isar?.writeTxn(() async {
         await isar?.collection<Product>().delete(product.id);
       });

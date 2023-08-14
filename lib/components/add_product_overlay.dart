@@ -12,6 +12,7 @@ class AddProductOverlay extends StatefulWidget {
 }
 
 class _AddProductOverlayState extends State<AddProductOverlay> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController descController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -36,11 +37,19 @@ class _AddProductOverlayState extends State<AddProductOverlay> {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Form(
+        key: formKey,
         child: Column(
           children: [
             TextFormField(
               controller: nameController,
               decoration: textFieldDeco,
+              validator: (value) {
+                if (value!.isNotEmpty) {
+                  return null;
+                } else {
+                  return "Please Enter Product Name";
+                }
+              },
             ),
             SizedBox(
               height: 6,
@@ -48,6 +57,13 @@ class _AddProductOverlayState extends State<AddProductOverlay> {
             TextFormField(
               controller: descController,
               decoration: textFieldDeco,
+              validator: (value) {
+                if (value!.isNotEmpty) {
+                  return null;
+                } else {
+                  return "Please Enter Product Desc";
+                }
+              },
             ),
             SizedBox(
               height: 6,
@@ -59,6 +75,7 @@ class _AddProductOverlayState extends State<AddProductOverlay> {
                     child: TextFormField(
                   controller: priceController,
                   decoration: textFieldDeco,
+                  validator: (value) {},
                 )),
               ],
             ),
@@ -70,14 +87,16 @@ class _AddProductOverlayState extends State<AddProductOverlay> {
                         height: 45,
                         child: ElevatedButton(
                             onPressed: () async {
-                              if (widget.onSubmit != null) {
-                                widget.onSubmit!(Product(
-                                  name: nameController.text,
-                                  description: descController.text,
-                                  price: double.parse(priceController.text),
-                                ));
-                              } else {
-                                return;
+                              if (formKey.currentState!.validate()) {
+                                if (widget.onSubmit != null) {
+                                  widget.onSubmit!(Product(
+                                    name: nameController.text,
+                                    description: descController.text,
+                                    price: double.parse(priceController.text),
+                                  ));
+                                } else {
+                                  return;
+                                }
                               }
                             },
                             child: Text("Add To Store")))),

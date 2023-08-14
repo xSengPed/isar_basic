@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:isar_basic/screens/main_menu/main_menu.controller.dart';
+import 'package:isar_basic/screens/user_page/user_page.dart';
 import 'package:provider/provider.dart';
 
 class MainMenu extends StatefulWidget {
@@ -42,7 +43,15 @@ class _MainMenuState extends State<MainMenu> {
                 onPressed: con.goToAdmin,
                 child: Text("To Admin "),
               ),
-              TextButton(onPressed: () {}, child: Text("To User")),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserPage(),
+                        ));
+                  },
+                  child: Text("To User")),
             ],
           )),
         );

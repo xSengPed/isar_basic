@@ -10,8 +10,12 @@ class AdminPageController extends ChangeNotifier {
   List<Product> productsList = [];
 
   Future<void> getProductsList() async {
-    productsList = await DBServices.getProductList();
-    notifyListeners();
+    try {
+      productsList = await DBServices.getProductList();
+      notifyListeners();
+    } catch (e) {
+      Alert.showErrorAlert(context, err: e);
+    }
   }
 
   Future<void> createProduct(Product product) async {
@@ -29,7 +33,11 @@ class AdminPageController extends ChangeNotifier {
   }
 
   Future<void> deleteProduct(Product product) async {
-    await DBServices.deleteProduct(product);
-    getProductsList();
+    try {
+      await DBServices.deleteProduct(product);
+      getProductsList();
+    } catch (e) {
+      Alert.showErrorAlert(context, err: e);
+    }
   }
 }

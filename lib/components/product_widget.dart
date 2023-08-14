@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:isar_basic/models/product.dart';
 
@@ -5,6 +7,7 @@ class ProductWidget extends StatelessWidget {
   final Product product;
   final VoidCallback? onDelete;
   final VoidCallback? onUpdate;
+  final VoidCallback? onAddToCart;
   final bool isAdmin;
   const ProductWidget({
     super.key,
@@ -12,6 +15,7 @@ class ProductWidget extends StatelessWidget {
     this.isAdmin = false,
     this.onDelete,
     this.onUpdate,
+    this.onAddToCart,
   });
 
   @override
@@ -51,7 +55,13 @@ class ProductWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            Visibility(
+                visible: !isAdmin,
+                child: TextButton(
+                  onPressed: onAddToCart,
+                  child: Text('Add to Cart'),
+                ))
           ]),
         ),
       ),

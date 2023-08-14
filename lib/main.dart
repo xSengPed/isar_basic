@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:isar_basic/providers/cart_provider.dart';
 import 'package:isar_basic/screens/main_menu/main_menu.dart';
 import 'package:isar_basic/services/db_services.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,9 +15,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainMenu(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CartProvider>(
+          create: (context) => CartProvider(),
+        )
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: MainMenu(),
+      ),
     );
   }
 }
